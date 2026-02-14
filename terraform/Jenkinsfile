@@ -2,19 +2,12 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
+        stage('Terraform') {
             steps {
-                checkout scm
-            }
-        }
-
-        stage('Terraform Deploy') {
-            steps {
-                dir('terraform') {
-                    sh 'terraform init'
-                    sh 'terraform plan'
-                    sh 'terraform apply -auto-approve'
-                }
+                echo 'Deploying...'
+                sh 'terraform init'
+                sh 'terraform plan -var="ami_id=ami-0abc1234def567890"'
+                sh 'terraform apply -var="ami_id=ami-0abc1234def567890" -auto-approve'
             }
         }
     }
