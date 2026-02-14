@@ -9,14 +9,14 @@ pipeline {
                     sh '''
                         terraform init
                         terraform plan \
-                        -var="aws_region=us-east-1" \
-                        -var="ami_id=ami-0b6c6ebed2801a5cb" \
+                        -var="aws_region=eu-north-1" \
+                        -var="ami_id=ami-073130f74f5ffb161" \
                         -var="instance_type=t2.micro" \
                         -var="allowed_ssh_cidr=0.0.0.0/0"
                         
                         terraform apply -auto-approve \
-                        -var="aws_region=us-east-1" \
-                        -var="ami_id=ami-0b6c6ebed2801a5cb" \
+                        -var="aws_region=eu-north-1" \
+                        -var="ami_id=ami-073130f74f5ffb161" \
                         -var="instance_type=t2.micro" \
                         -var="allowed_ssh_cidr=0.0.0.0/0"
                     '''
