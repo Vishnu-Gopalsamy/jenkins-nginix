@@ -1,34 +1,27 @@
 pipeline {
     agent any
 
+    environment {
+        AWS_ACCESS_KEY_ID = credentials('AKIA4A4PO5P55UKAI5UI')
+        AWS_SECRET_ACCESS_KEY = credentials('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')
+        AWS_DEFAULT_REGION = 'us-east-1'
+    }
+
     stages {
 
-        stage('Checkout') {
+        stage('Source Code') {
             steps {
-                checkout scm
+                git branch: 'main',
+                    url: 'https://github.com/PV-Sudarsan/task-jenkins.git'
             }
         }
 
-        stage('Terraform Init') {
+        stage('Terraform Deploy') {
             steps {
                 dir('terraform') {
                     sh 'terraform init'
-                }
-            }
-        }
-
-        stage('Terraform Validate') {
-            steps {
-                dir('terraform') {
-                    sh 'terraform validate'
-                }
-            }
-        }
-
-        stage('Terraform Apply') {
-            steps {
-                dir('terraform') {
-                    sh 'terraform apply -auto-approve'
+                    sh 'terraform plan -var="ami=ami-0abc1234def567890"'
+                    sh 'terraform apply -var="ami=ami-0abc1234def567890" -auto-approve'
                 }
             }
         }
