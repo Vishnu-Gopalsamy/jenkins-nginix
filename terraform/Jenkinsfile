@@ -6,9 +6,20 @@ pipeline {
             steps {
                 echo 'Deploying...'
                 dir('terraform') {
-                    sh 'terraform init'
-                    sh 'terraform plan'
-                    sh 'terraform apply -auto-approve'
+                    sh '''
+                        terraform init
+                        terraform plan \
+                        -var="aws_region=us-east-1" \
+                        -var="ami_id=ami-0b6c6ebed2801a5cb" \
+                        -var="instance_type=t2.micro" \
+                        -var="allowed_ssh_cidr=0.0.0.0/0"
+                        
+                        terraform apply -auto-approve \
+                        -var="aws_region=us-east-1" \
+                        -var="ami_id=ami-0b6c6ebed2801a5cb" \
+                        -var="instance_type=t2.micro" \
+                        -var="allowed_ssh_cidr=0.0.0.0/0"
+                    '''
                 }
             }
         }
