@@ -1,0 +1,5 @@
+aws_region             = "us-east-1"
+ami_id                 = "ami-0abc1234def567890"
+instance_type          = "t2.micro"
+allowed_ssh_cidr       = "0.0.0.0/0"
+existing_key_pair_name = "your-keypair-name"
